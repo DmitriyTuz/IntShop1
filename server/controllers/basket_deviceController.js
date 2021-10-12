@@ -1,20 +1,20 @@
-const {Type} = require('../models/models')
+const {BasketDevice} = require('../models/models')
 const ApiError = require('../error/ApiError');
 
-class TypeController {
+class BasketDeviceController {
     async create(req, res) {
-        const {name} = req.body
-        const type = await Type.create({name})
-        return res.json(type)
+        const {deviceId, basketId} = req.body
+        const basketDevice = await BasketDevice.create({deviceId, basketId})
+        return res.json(basketDevice)
     }
 
     async getAll(req, res) {
-        const types = await Type.findAll()
-        return res.json(types)
+        const basketDevices = await BasketDevice.findAll()
+        return res.json(basketDevices)
     }
 
     async delete(req, res) {
-        await Type.destroy({
+        await BasketDevice.destroy({
             where: {
                 id: req.params.id
             }
@@ -23,10 +23,10 @@ class TypeController {
     }
 
     async edit(req, res) {
-        await Type.update(
+        await BasketDevice.update(
             {
-                id: req.body.id,
-                name: req.body.name
+                deviceId: req.body.deviceId,
+                basketId: req.body.basketId
             },
             {
                 where: { id: req.body.id }
@@ -37,13 +37,13 @@ class TypeController {
 
     async getOne(req, res) {
         const {id} = req.params
-        const type = await Type.findOne(
+        const basketDevice = await BasketDevice.findOne(
             {
                 where: {id}
             }
         )
-        return res.json(type)
+        return res.json(basketDevice)
     }
 }
 
-module.exports = new TypeController()
+module.exports = new BasketDeviceController()

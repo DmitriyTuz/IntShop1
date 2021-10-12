@@ -1,20 +1,20 @@
-const {Type} = require('../models/models')
+const {Basket} = require('../models/models')
 const ApiError = require('../error/ApiError');
 
-class TypeController {
+class BasketController {
     async create(req, res) {
-        const {name} = req.body
-        const type = await Type.create({name})
-        return res.json(type)
+        let {userId} = req.body
+        const basket = await Basket.create({userId})
+        return res.json(basket)
     }
 
     async getAll(req, res) {
-        const types = await Type.findAll()
-        return res.json(types)
+        const baskets = await Basket.findAll()
+        return res.json(baskets)
     }
 
     async delete(req, res) {
-        await Type.destroy({
+        await Basket.destroy({
             where: {
                 id: req.params.id
             }
@@ -23,10 +23,9 @@ class TypeController {
     }
 
     async edit(req, res) {
-        await Type.update(
+        await Basket.update(
             {
-                id: req.body.id,
-                name: req.body.name
+                userId: req.body.userId
             },
             {
                 where: { id: req.body.id }
@@ -37,13 +36,13 @@ class TypeController {
 
     async getOne(req, res) {
         const {id} = req.params
-        const type = await Type.findOne(
+        const basket = await Basket.findOne(
             {
                 where: {id}
             }
         )
-        return res.json(type)
+        return res.json(basket)
     }
 }
 
-module.exports = new TypeController()
+module.exports = new BasketController()
