@@ -4,33 +4,98 @@ const ApiError = require('../error/ApiError');
 
 class RatingController {
 
-/*// sequelize
+// sequelize
     async create(req, res) {
         const {userId, deviceId, rate} = req.body
         const rating = await Rating.create({userId, deviceId, rate})
         return res.json(rating)
-    }*/
+    }
 
-// SQL
+/*// SQL !!! создаёт но не выдаёт
     async create(req, res) {
 //        const {userId, deviceId, rate} = req.body
         let query = `INSERT INTO "ratings"("userId", "deviceId", "rate", "createdAt", "updatedAt") VALUES (${req.body.userId}, ${req.body.deviceId}, ${req.body.rate}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`
         const rating = await sequelize.query(query)
         return res.json(rating[0])
-    }
+    }*/
 
-/* // sequelize
+ // sequelize
     async getAll(req, res) {
         const rating = await Rating.findAll()
         return res.json(rating)
-    }*/
+    }
 
- // SQL
+/* // SQL
     async getAll(req, res) {
         let query = 'SELECT * FROM "ratings"';
         const rating = await sequelize.query(query);
         return res.json(rating[0])
+    }*/
+
+/*// sequelize
+    async getOne(req, res) {
+        const {id} = req.params
+        const rating = await Rating.findOne(
+            {
+                where: {id}
+            }
+        )
+        return res.json(rating)
+        }*/
+
+// SQL
+    async getOne(req, res) {
+        let query = `SELECT * FROM "ratings" WHERE id = ${req.params.id}`
+        const rating = await sequelize.query(query)
+        return res.json(rating[0])
+}
+
+// sequelize
+    async getOneByUserIdAndDeviceId(req, res) {
+        const rating = await Rating.findAll(
+            {
+                where: {
+                        userId: req.query.userId,
+                        deviceId: req.query.deviceId
+                }
+            }
+        )
+        return res.json(rating)
     }
+
+/*// SQL
+    async getOneByUserIdAndDeviceId(req, res) {
+//        const {userId, deviceId}  = req.query;
+//        let deviceId = req.body.deviceId;
+        let query = `SELECT * FROM "ratings" WHERE "userId" = ${req.query.userId} AND "deviceId" = ${req.query.deviceId}`
+        const rating = await sequelize.query(query)
+        return res.json(rating[0])
+    }*/
+
+// sequelize
+    async getAllByRate(req, res) {
+        const rating = await Rating.findAll(
+            {
+                where: {
+                    rate: req.query.rate
+                }
+            }
+        )
+        return res.json(rating)
+    }
+
+// SQL !!! - переделать
+    async getAllByRate(req, res) {
+        const rating = await Rating.findAll(
+            {
+                where: {
+                    rate: req.query.rate
+                }
+            }
+        )
+        return res.json(rating)
+    }
+
 
 /*// sequelize
     async delete(req, res) {
@@ -49,8 +114,30 @@ class RatingController {
         return res.send("успешное удаление")
     }
 
-/* // sequelize
-    async edit(req, res) {
+/*// sequelize
+    async editRateById(req, res) {
+        await Rating.update(
+            {
+                rate: req.body.rate
+            },
+            {
+                where: {
+                    id: req.body.id
+                }
+            }
+        );
+        return res.send("успешное обновление")
+    }*/
+
+// SQL
+    async editRateById(req, res) {
+        let query = `UPDATE "ratings" SET rate = ${req.body.rate} WHERE id = ${req.body.id}`
+        await sequelize.query(query)
+        return res.send("успешное обновление")
+    }
+
+    /* // sequelize
+    async editRateByUserIdAndDeviceId(req, res) {
         await Rating.update(
             {
                 rate: req.body.rate
@@ -66,7 +153,7 @@ class RatingController {
     }*/
 
 // SQL
-    async edit(req, res) {
+    async editRateByUserIdAndDeviceId(req, res) {
         let query = `UPDATE "ratings" SET rate = ${req.body.rate} WHERE "userId" = ${req.body.userId} AND  "deviceId" = ${req.body.deviceId}`
         await sequelize.query(query)
         return res.send("успешное обновление")
@@ -83,24 +170,6 @@ class RatingController {
         );
         return res.send("успешное обновление")
     }*/
-
-/*// sequelize
-    async getOne(req, res) {
-        const {id} = req.params
-        const rating = await Rating.findOne(
-            {
-                where: {id}
-            }
-        )
-        return res.json(rating)
-    }*/
-
-// SQL
-    async getOne(req, res) {
-        let query = `SELECT * FROM "ratings" WHERE id = ${req.params.id}`
-        const rating = await sequelize.query(query)
-        return res.json(rating[0])
-    }
 
 }
 

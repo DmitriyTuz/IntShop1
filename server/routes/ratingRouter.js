@@ -3,10 +3,16 @@ const router = new Router()
 const ratingController = require('../controllers/ratingController')
 
 
-router.post('/create', ratingController.create)
 router.get('/', ratingController.getAll)
+router.get('/getOne/:id', ratingController.getOne)
+router.get('/getOneByUserIdAndDeviceId', ratingController.getOneByUserIdAndDeviceId)
+router.get('/getAllByRate', ratingController.getAllByRate)
+
+router.post('/create', ratingController.create)
+
 router.delete("/delete/:id", ratingController.delete)
-router.put("/edit", ratingController.edit)
-router.get('/:id', ratingController.getOne)
+
+router.put("/editRate/ById", ratingController.editRateById)
+router.put("/editRate/ByUserIdAndDeviceId", ratingController.editRateByUserIdAndDeviceId)
 
 module.exports = router
