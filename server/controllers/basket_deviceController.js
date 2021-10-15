@@ -44,6 +44,10 @@ class BasketDeviceController {
         )
         return res.json(basketDevice)
     }
+
+/*    async addToBasketDevices(req, res) {
+        const basket = await BasketDevice.findAll({where: {basketId: basket.id, deviceId: device.id })
+    }*/
 }
 
 module.exports = new BasketDeviceController()

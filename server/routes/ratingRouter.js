@@ -7,6 +7,7 @@ router.get('/', ratingController.getAll)
 router.get('/getOne/:id', ratingController.getOne)
 router.get('/getOneByUserIdAndDeviceId', ratingController.getOneByUserIdAndDeviceId)
 router.get('/getAllByRate', ratingController.getAllByRate)
+router.get('/getAllByRateNotNull', ratingController.getAllByRateNotNull)
 
 router.post('/create', ratingController.create)
 
