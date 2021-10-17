@@ -45,9 +45,12 @@ class BasketDeviceController {
         return res.json(basketDevice)
     }
 
-/*    async addToBasketDevices(req, res) {
-        const basket = await BasketDevice.findAll({where: {basketId: basket.id, deviceId: device.id })
-    }*/
+// sequelize пока не работает !!!
+    async addToBasketDevices(req, res) {
+        const {basketId} = req.query
+        const basket1 = await BasketDevice.findAll({where: {basketId}})
+        return res.json(basket1)
+    }
 }
 
 module.exports = new BasketDeviceController()

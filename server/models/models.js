@@ -49,28 +49,28 @@ const TypeBrand = sequelize.define('type_brand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
-User.hasOne(Basket)
+User.hasOne(Basket, { onDelete: "cascade" })
 Basket.belongsTo(User)
 
-User.hasMany(Rating)
+User.hasMany(Rating, { onDelete: "cascade" })
 Rating.belongsTo(User)
 
-Basket.hasMany(BasketDevice)
+Basket.hasMany(BasketDevice, { onDelete: "cascade" })
 BasketDevice.belongsTo(Basket)
 
-Type.hasMany(Device)
+Type.hasMany(Device, { onDelete: "cascade" })
 Device.belongsTo(Type)
 
-Brand.hasMany(Device)
+Brand.hasMany(Device, { onDelete: "cascade" })
 Device.belongsTo(Brand)
 
-Device.hasMany(Rating)
+Device.hasMany(Rating, { onDelete: "cascade" })
 Rating.belongsTo(Device)
 
-Device.hasMany(BasketDevice)
+Device.hasMany(BasketDevice, { onDelete: "cascade" })
 BasketDevice.belongsTo(Device)
 
-Device.hasMany(DeviceInfo, {as: 'info'});
+Device.hasMany(DeviceInfo,{as: 'info'})
 DeviceInfo.belongsTo(Device)
 
 Type.belongsToMany(Brand, { through: TypeBrand })

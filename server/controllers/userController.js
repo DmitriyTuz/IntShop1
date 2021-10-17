@@ -1,7 +1,7 @@
 const ApiError = require('../error/ApiError')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {User,Basket, Type} = require('../models/models')
+const {User,Basket, Type, Rating} = require('../models/models')
 
 const generateJwt = (id, email,role) => {
     return jwt.sign(
@@ -52,6 +52,28 @@ class UserController {
         const token = generateJwt((req.user.id, req.user.email, req.role))
         return res.json({token})
     }
+
+    async getAllUsersWithRate(req, res) {
+            let {id, rate} = req.query
+            const user = await User.findOne({where: {id}})
+
+            const usId = user.id
+            const user1 = await Rating.findAll({where: {userId: usId}})
+            return res.json(user1)
+        }
+
+/*    async getAllUsersWithRate(req, res) {
+//        let {id, rate} = req.query
+        const user = await Rating.findAll({
+            include: [{model: User, through: {attributes: []}}]
+        })
+
+//        const usId = user.id
+//        const user1 = await Rating.findAll({where: {userId: usId}})
+        return res.json(user)
+
+    }*/
+
 }
 
 module.exports = new UserController()
