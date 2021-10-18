@@ -3,10 +3,16 @@ const router = new Router()
 const basketController = require('../controllers/basketController')
 
 
-router.post('/create', basketController.create)
 router.get('/', basketController.getAll)
-router.delete("/delete/:id", basketController.delete)
+router.get('/find/:id', basketController.getOne)
+router.get('/getBasketWithDevises', basketController.getBasketWithDevises)
+
+router.post('/create', basketController.create)
+
 router.put("/edit", basketController.edit)
-router.get('/:id', basketController.getOne)
+
+router.delete("/delete/:id", basketController.delete)
+
+
 
 module.exports = router
