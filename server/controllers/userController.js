@@ -40,9 +40,12 @@ class UserController {
         if (!user) {
             return next(ApiError.internal('Пользователь не найден'))
         }
-        let comparePassword = bcrypt.compareSync(password, user.password)
-        if (!comparePassword) {
-            return next(ApiError.internal('Указан неверный пароль'))
+        if(user.password) {
+            let comparePassword = bcrypt.compareSync(password, user.password)
+
+            if (!comparePassword) {
+                return next(ApiError.internal('Указан неверный пароль'))
+            }
         }
         const token = generateJwt(user.id, user.email, user.role)
         return res.json({token})
@@ -53,26 +56,11 @@ class UserController {
         return res.json({token})
     }
 
-    async getAllUsersWithRate(req, res) {
-            let {id, rate} = req.query
-            const user = await User.findOne({where: {id}})
-
-            const usId = user.id
-            const user1 = await Rating.findAll({where: {userId: usId}})
-            return res.json(user1)
-        }
-
-/*    async getAllUsersWithRate(req, res) {
-//        let {id, rate} = req.query
-        const user = await Rating.findAll({
-            include: [{model: User, through: {attributes: []}}]
-        })
-
-//        const usId = user.id
-//        const user1 = await Rating.findAll({where: {userId: usId}})
-        return res.json(user)
-
-    }*/
+    async PasswordReset(req, res) {
+        let {id} = req.body
+        const user = User.update({password: null}, {where: {id}})
+        return res.json("reset completed !")
+    }
 
 }
 

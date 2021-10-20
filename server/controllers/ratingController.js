@@ -232,18 +232,6 @@ class RatingController {
         return res.send("успешное обновление")
     }
 
-    /* async edit(req, res) {
-        await Rating.sequelize.query(`UPDATE rating SET rate = "${req.body.rate}" WHERE userId = "${req.body.userId}" AND deviceId = "${req.body.deviceId}"`,
-            function(err, results, fields) {
-                console.log(err);
-                console.log(results); // собственно данные
-                console.log(fields); // мета-данные полей
-            })
-
-        );
-        return res.send("успешное обновление")
-    }*/
-
 
 }
 

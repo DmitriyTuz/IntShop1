@@ -4,6 +4,7 @@ const {Device, DeviceInfo} = require('../models/models')
 const ApiError = require('../error/ApiError')
 
 class DeviceController {
+
     async create(req, res, next) {
         try {
             let {name, price, brandId, typeId, info} = req.body
@@ -63,6 +64,31 @@ class DeviceController {
         )
         return res.json(device)
     }
+
+    async CreateFieldInfoInDevice (req, res) {
+        let {id, info} = req.body
+        if (info) {
+//            info = JSON.parse(info)
+            await info.forEach(i =>
+                DeviceInfo.create({
+                    title: i.title,
+                    description: i.description,
+                    deviceId: id
+                })
+            )
+        }
+        return res.send('Update completed !')
+    }
+/*    if (info) {
+        info = JSON.parse(info)
+        info.forEach(i =>
+            DeviceInfo.create({
+                title: i.title,
+                description: i.description,
+                deviceId: device.id
+            })
+        )
+    }*/
 
 }
 
