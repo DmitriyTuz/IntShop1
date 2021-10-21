@@ -6,6 +6,8 @@ router.get('/', deviceController.getAll)
 router.get('/find/:id', deviceController.getOne)
 
 router.post('/create', deviceController.create)
-router.post('/createFieldInfoInDevice', deviceController.CreateFieldInfoInDevice)
+
+
+
 
 module.exports = router

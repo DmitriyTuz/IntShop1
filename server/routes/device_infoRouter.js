@@ -5,6 +5,8 @@ const device_infoController = require('../controllers/device_infoController')
 router.get('/', device_infoController.getAll)
 //router.get('/find/:id', deviceController.getOne)
 
-//router.put('/UpdateFieldInfoInDevice', deviceController.UpdateFieldInfoInDevice)
+router.post('/createInfoInDevice', device_infoController.createInfoInDevice)
+
+router.put('/updateInfoInDevice', device_infoController.updateInfoInDevice)
 
 module.exports = router
