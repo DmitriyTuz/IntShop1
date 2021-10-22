@@ -34,19 +34,45 @@ class UserController {
         return res.json({token})
     }
 
-    async login(req, res, next) {
-        const {email, password} = req.body
+    async updatePassword(req, res, next) {
+        const {email, newPassword} = req.body
         const user = await User.findOne({where: {email}})
         if (!user) {
             return next(ApiError.internal('Пользователь не найден'))
         }
-        if(user.password) {
+        const hashPassword = await bcrypt.hash(newPassword, 5)
+        await User.update({password: hashPassword},
+            {
+                where: {email}
+            })
+/*        const token = generateJwt(user.id, user.email)
+        return res.json({token})*/
+        return res.json({user})
+}
+
+/*        if(user.password) {
             let comparePassword = bcrypt.compareSync(password, user.password)
 
             if (!comparePassword) {
                 return next(ApiError.internal('Указан неверный пароль'))
             }
         }
+        const token = generateJwt(user.id, user.email, user.role)
+        return res.json({token})
+    }*/
+
+    async login(req, res, next) {
+        const {email, password} = req.body
+        const user = await User.findOne({where: {email}})
+        if (!user) {
+            return next(ApiError.internal('Пользователь не найден'))
+        }
+        let comparePassword = bcrypt.compareSync(password, user.password)
+
+        if (!comparePassword) {
+            return next(ApiError.internal('Указан неверный пароль'))
+        }
+
         const token = generateJwt(user.id, user.email, user.role)
         return res.json({token})
     }
@@ -56,7 +82,7 @@ class UserController {
         return res.json({token})
     }
 
-    async PasswordReset(req, res) {
+    async passwordReset(req, res) {
         let {id} = req.body
         const user = User.update({password: null}, {where: {id}})
         return res.json("reset completed !")

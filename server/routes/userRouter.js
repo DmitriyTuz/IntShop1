@@ -12,6 +12,8 @@ router.post('/registration', userController.registration)
 router.post('/login', userController.login)
 router.get('/auth', authMiddleware, userController.check)
 
-router.put('/PasswordReset', userController.PasswordReset)
+router.put('/PasswordReset', userController.passwordReset)
+router.put('/updatePassword', userController.updatePassword)
+
 
 module.exports = router

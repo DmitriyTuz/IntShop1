@@ -25,7 +25,6 @@ class TypeController {
     async edit(req, res) {
         await Type.update(
             {
-                id: req.body.id,
                 name: req.body.name
             },
             {

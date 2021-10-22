@@ -10,8 +10,8 @@ router.get('/find/:id', typeController.getOne)
 router.post('/create', checkRole('ADMIN'), typeController.create)
 
 
-router.put("/edit", typeController.edit)
+router.put("/edit", checkRole('ADMIN'), typeController.edit)
 
-router.delete("/delete/:id", typeController.delete)
+router.delete("/delete/:id", checkRole('ADMIN'), typeController.delete)
 
 module.exports = router
