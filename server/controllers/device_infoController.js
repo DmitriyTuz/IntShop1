@@ -3,7 +3,7 @@ const {DeviceInfo} = require('../models/models')
 class DeviceInfoController {
 
     async getAll(req, res) {
-        const device_info = DeviceInfo.findAll()
+        const device_info = await DeviceInfo.findAll()
         return res.json(device_info)
     }
 
