@@ -13,7 +13,7 @@ router.post('/addDeviceToBasket', basketController.addDeviceToBasket)
 router.put("/edit", basketController.edit)
 
 router.delete("/delete/:id", basketController.delete)
-
+router.delete("/deleteDeviceFromBasket", basketController.deleteOneDeviceFromBasket)
 
 
 module.exports = router
