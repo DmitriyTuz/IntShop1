@@ -8,6 +8,7 @@ router.get('/find/:id', basketController.getOne)
 router.get('/getBasketWithDevises', basketController.getBasketWithDevises)
 
 router.post('/create', basketController.create)
+router.post('/addDeviceToBasket', basketController.addDeviceToBasket)
 
 router.put("/edit", basketController.edit)
 

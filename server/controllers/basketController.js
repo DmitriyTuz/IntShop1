@@ -44,20 +44,28 @@ class BasketController {
         return res.json(basket)
     }
 
+// get basket with devices
     async getBasketWithDevises(req, res) {
-        let res1 = await Basket.findOne({attributes: [],
+        let basket = await Basket.findOne({attributes: [],
             include: [{
                 model: BasketDevice, attributes:["id"],
                 required: false,
                 include: [{
-                    model: Device, attributes:["name", "price", "rating"],
+                    model: Device, attributes:["id","name", "price", "rating"],
                     required: false
                 }]
             }]
         })
 
-        return res.json(res1)
+        return res.json(basket)
     };
+
+// add device to basket
+    async addDeviceToBasket(req, res) {
+        let {basketId, deviceId} = req.body
+        const basket = await BasketDevice.create({basketId, deviceId})
+        return res.json(basket)
+    }
 
 
 }
