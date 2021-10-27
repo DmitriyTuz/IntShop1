@@ -1,3 +1,6 @@
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 const ApiError = require('../error/ApiError')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -88,6 +91,19 @@ class UserController {
         return res.json("reset completed !")
     }
 
+
+/*    const Sequelize = require('sequelize');
+    const Op = Sequelize.Op;*/
+
+
+
+    async findByPartOfEmail (req, res) {
+//        let {} = req.query
+//        const user = await User.findAll({ where: { email: "user1@mail.ru" } })
+        const user = await User.findAll({ where: { email: { [Op.like]: `%${req.query.email}%` } } })
+//        const user = await User.findAll({ where: { email: { [Op.like]: '%12%' } } })
+        return res.json(user)
+    }
 }
 
 module.exports = new UserController()
