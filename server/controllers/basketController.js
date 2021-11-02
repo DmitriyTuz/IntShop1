@@ -75,7 +75,12 @@ class BasketController {
         return res.json(basket)
     }
 
-// Full delete basket ...
+// Full delete devises from basket
+    async deleteAllDeviceFromBasket(req, res) {
+        let {basketId} = req.body
+        const basket = await BasketDevice.destroy({where: {basketId}})
+        return res.json(basket)
+    }
 
 }
 

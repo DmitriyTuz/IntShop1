@@ -14,6 +14,6 @@ router.put("/edit", basketController.edit)
 
 router.delete("/delete/:id", basketController.delete)
 router.delete("/deleteDeviceFromBasket", basketController.deleteOneDeviceFromBasket)
-
+router.delete("/deleteAllDeviceFromBasket", basketController.deleteAllDeviceFromBasket)
 
 module.exports = router
