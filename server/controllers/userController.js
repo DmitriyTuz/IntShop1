@@ -1,10 +1,15 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+const nodemailer = require("nodemailer");
+const validator = require('validator');
+
 const ApiError = require('../error/ApiError')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {User,Basket, Type, Rating} = require('../models/models')
+
+const {createToken, verifyToken, hashPassword} = require("../utils");
 
 const generateJwt = (id, email,role) => {
     return jwt.sign(
@@ -104,6 +109,70 @@ class UserController {
 //        const user = await User.findAll({ where: { email: { [Op.like]: '%12%' } } })
         return res.json(user)
     }
+
+    async sendResetLink(req, res, next) {
+        try {
+            const { email } = req.body;
+            const user = await User.findOne({where: { email } });
+            if (!email) {
+                return next(ApiError.badRequest('Email is required'))
+            }
+            if (!validator.isEmail(email)) {
+                return next(ApiError.badRequest('Invalid email'))
+            }
+            if (!user) {
+                return next(ApiError.badRequest('User not found'))
+            }
+
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'dmitriytuz123@gmail.com',
+                    pass: 'dimonchidimadim1',
+                },
+            })
+
+            const token = createToken(user);
+            const link = `${req.protocol}://localhost:5000/api/user/reset_password/${token}`
+            let info = await transporter.sendMail({
+                from: '"Node js" <nodejs@example.com>', // sender address
+                to: "dmitriytuz123@gmail.com", // list of receivers
+                subject: "Your IntShop password reset !", // Subject line
+//                text: "Your IntShop password reset", // plain text body
+                html: `<div>Click the link below to reset your password</div></br>
+                       <div>${link}</div>
+                      `
+
+            });
+            console.log("Message sent: %s", info.messageId);
+            return res.status(200).send({message: 'Password reset link has been successfully sent to your inbox' })
+
+        } catch (e) {
+            return next (new Error(e));
+        }
+    }
+
+    async resetPassword(req, res, next) {
+        try {
+            const { password } = req.body;
+            const { token } = req.params;
+            const decoded = verifyToken(token);
+            const hash = hashPassword(password)
+            const updatedUser = await User.update(
+                { password: hash },
+                {
+                    where: { id: decoded.id },
+                    returning: true,
+                    plain: true
+                }
+            )
+            return res.status(200).send({ token, user: updatedUser[1] });
+
+        } catch (e) {
+            return next(new Error(e));
+        }
+    }
+
 }
 
 module.exports = new UserController()
