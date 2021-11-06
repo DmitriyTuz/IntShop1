@@ -42,33 +42,6 @@ class UserController {
         return res.json({token})
     }
 
-    async updatePassword(req, res, next) {
-        const {email, newPassword} = req.body
-        const user = await User.findOne({where: {email}})
-        if (!user) {
-            return next(ApiError.internal('Пользователь не найден'))
-        }
-        const hashPassword = await bcrypt.hash(newPassword, 5)
-        await User.update({password: hashPassword},
-            {
-                where: {email}
-            })
-/*        const token = generateJwt(user.id, user.email)
-        return res.json({token})*/
-        return res.json({user})
-}
-
-/*        if(user.password) {
-            let comparePassword = bcrypt.compareSync(password, user.password)
-
-            if (!comparePassword) {
-                return next(ApiError.internal('Указан неверный пароль'))
-            }
-        }
-        const token = generateJwt(user.id, user.email, user.role)
-        return res.json({token})
-    }*/
-
     async login(req, res, next) {
         const {email, password} = req.body
         const user = await User.findOne({where: {email}})
@@ -133,7 +106,7 @@ class UserController {
             })
 
             const token = createToken(user);
-            const link = `${req.protocol}://localhost:5000/api/user/reset_password/${token}`
+            const link = `${req.protocol}://localhost:5000/api/user/getFormResetPassword/${token}`
             let info = await transporter.sendMail({
                 from: '"Node js" <nodejs@example.com>', // sender address
                 to: "dmitriytuz123@gmail.com", // list of receivers
@@ -152,7 +125,12 @@ class UserController {
         }
     }
 
-    async resetPassword(req, res, next) {
+    async getFormForNewPassword(req, res, next) {
+// redirect('updatePassword.html');
+        return res.status(200).send('Переходим к форме для введения нового пароля !');
+    }
+
+    async updatePassword(req, res, next) {
         try {
             const { password } = req.body;
             const { token } = req.params;
