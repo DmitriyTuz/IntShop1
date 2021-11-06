@@ -9,7 +9,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {User,Basket, Type, Rating} = require('../models/models')
 
-const {createToken, verifyToken, hashPassword} = require("../utils");
+const {createToken, verifyToken} = require("../utils/jwtToken");
+const {hashPassword, comparePassword} = require("../utils/workPassword");
 
 const generateJwt = (id, email,role) => {
     return jwt.sign(
@@ -20,6 +21,7 @@ const generateJwt = (id, email,role) => {
 }
 
 class UserController {
+
     async getAll(req, res) {
         const users = await User.findAll()
         return res.json(users)
@@ -106,7 +108,7 @@ class UserController {
             })
 
             const token = createToken(user);
-            const link = `${req.protocol}://localhost:5000/api/user/getFormResetPassword/${token}`
+            const link = `${req.protocol}://localhost:5000/api/user/reset_password/${token}`
             let info = await transporter.sendMail({
                 from: '"Node js" <nodejs@example.com>', // sender address
                 to: "dmitriytuz123@gmail.com", // list of receivers
@@ -136,6 +138,7 @@ class UserController {
             const { token } = req.params;
             const decoded = verifyToken(token);
             const hash = hashPassword(password)
+            const decodedPassword = req.body.password;
             const updatedUser = await User.update(
                 { password: hash },
                 {
@@ -144,7 +147,7 @@ class UserController {
                     plain: true
                 }
             )
-            return res.status(200).send({ token, user: updatedUser[1] });
+            return res.status(200).send({ token, user: updatedUser[1], decodedPassword });
 
         } catch (e) {
             return next(new Error(e));
