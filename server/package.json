@@ -20,6 +20,8 @@
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.5",
+    "socket.io": "2.2.0",
+    "soket.io": "0.0.1-security",
     "uuid": "^8.3.2",
     "validator": "^13.7.0"
   },

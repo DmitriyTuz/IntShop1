@@ -129,7 +129,7 @@ class UserController {
             const updatedUser = await User.update(
                 { password: hash },
                 {
-                    where: { id: decoded.id },
+                    where: { id: decoded.userId },
                     returning: true,
                     plain: true
                 }
