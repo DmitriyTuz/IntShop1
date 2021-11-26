@@ -49,6 +49,25 @@ const TypeBrand = sequelize.define('type_brand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
+const UserRoom = sequelize.define('user_room', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+})
+
+
+
+
+const Room = sequelize.define('room', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, unique: true, allowNull: false}
+})
+
+const Message = sequelize.define('message', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    text: {type: DataTypes.STRING, unique: true, allowNull: false}
+})
+
+
+
 User.hasOne(Basket, { onDelete: "cascade" })
 Basket.belongsTo(User)
 
@@ -76,6 +95,17 @@ DeviceInfo.belongsTo(Device)
 Type.belongsToMany(Brand, { through: TypeBrand })
 Brand.belongsToMany(Type, { through: TypeBrand })
 
+
+
+User.hasMany(Message, { onDelete: "cascade" })
+Message.belongsTo(User)
+
+Room.hasMany(Message, { onDelete: "cascade" })
+Message.belongsTo(Room)
+
+User.belongsToMany(Room, { through: UserRoom })
+Room.belongsToMany(User, { through: UserRoom })
+
 module.exports = {
     User,
     Basket,
@@ -85,5 +115,8 @@ module.exports = {
     Brand,
     Rating,
     TypeBrand,
-    DeviceInfo
+    DeviceInfo,
+
+    Room,
+    Message
 }

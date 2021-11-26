@@ -10,7 +10,7 @@ const path = require('path')
 const http = require("http");
 const socketio = require('socket.io');
 
-const { connectSocket } = require('./Chat/chat');
+const { connectSocket } = require('./controllers/chatController');
 
 const PORT = process.env.PORT || 5000
 

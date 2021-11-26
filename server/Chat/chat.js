@@ -1,4 +1,4 @@
-const { addUser, removeUser, getUser, getUsersInRoom } = require('../users');
+/*const { addUser, removeUser, getUser, getUsersInRoom } = require('./users_functions');
 
 function connectSocket(io) {
      io.on('connect', (socket) => {
@@ -45,4 +45,4 @@ function connectSocket(io) {
     });
 }
 
-module.exports = { connectSocket };
+module.exports = { connectSocket };*/
