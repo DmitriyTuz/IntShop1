@@ -24,9 +24,9 @@ class UserController {
     }
 
     async registration(req, res, next) {
-        const {email, password, role} = req.body
-        if (!email || !password) {
-            return next(ApiError.badRequest('Некорректный email или password'))
+        const {name, email, password, role} = req.body
+        if (!email || !password || !name) {
+            return next(ApiError.badRequest('Некорректный ввод'))
         }
         const candidate = await User.findOne({where: {email}})
         if (candidate) {
@@ -34,10 +34,10 @@ class UserController {
         }
 //        const hashPassword = await bcrypt.hash(password, 5)
         const HashPassword = await workPassword.hashPassword(password)
-        const user = await User.create({email, role, password: HashPassword})
+        const user = await User.create({name, email, role, password: HashPassword})
         const basket = await Basket.create({userId: user.id})
-        const rating = await Rating.create({userId: user.id, deviceId: device.id})
-        const token = jwtToken.createToken((user.id, user.email, user.role));
+//        const rating = await Rating.create({userId: user.id, deviceId: device.id})
+        const token = jwtToken.createToken((user.id, user.name, user.email, user.role));
         return res.json({token})
     }
 
@@ -63,6 +63,15 @@ class UserController {
     }
 
 
+    async findUserNameByEmail (req, res, next) {
+        const { email } = req.query;
+        const user = await User.findOne({ where: { email } })
+
+        if (!user) {
+            return next(ApiError.internal('Пользователь с таким email не найден'))
+        }
+        return res.send(user.name)
+    }
 
     async findByPartOfEmail (req, res) {
 //        let {} = req.query

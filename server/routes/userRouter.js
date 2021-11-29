@@ -6,6 +6,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 
 router.get('/', userController.getAll)
+router.get('/findUserNameByEmail', userController.findUserNameByEmail)
 router.get('/findByPartOfEmail', userController.findByPartOfEmail)
 
 router.post('/registration', userController.registration)

@@ -1,5 +1,5 @@
 const { User, Room, Message, Basket, BasketDevice, Device} = require('../models/models')
-const {addUser, getUsersInRoom, getUser, removeUser} = require('../Chat/users_functions');
+const { addUser, getUsersInRoom, getUser, removeUser } = require('../Chat/user_functions');
 const ApiError = require("../error/ApiError");
 
 class ChatController {
