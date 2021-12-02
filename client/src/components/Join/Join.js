@@ -5,6 +5,7 @@ import './Join.css';
 
 export default function SignIn() {
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [room, setRoom] = useState('');
 
   return (
@@ -17,7 +18,10 @@ export default function SignIn() {
         <div>
           <input placeholder="Room" className="joinInput mt-20" type="text" onChange={(event) => setRoom(event.target.value)} />
         </div>
-        <Link onClick={e => (!name || !room) ? e.preventDefault() : null} to={`/chat?name=${name}&room=${room}`}>
+        <div>
+          <input placeholder="Email" className="joinInput mt-20" type="text" onChange={(event) => setEmail(event.target.value)} />
+        </div>
+        <Link onClick={e => (!name || !room || !email) ? e.preventDefault() : null} to={`/chat?name=${name}&room=${room}`}>
           <button className={'button mt-20'} type="submit">Sign In</button>
         </Link>
       </div>

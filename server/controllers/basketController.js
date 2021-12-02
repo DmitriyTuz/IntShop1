@@ -2,6 +2,7 @@ const {Basket, BasketDevice, Device} = require('../models/models')
 const ApiError = require('../error/ApiError');
 
 class BasketController {
+
     async create(req, res) {
         let {userId} = req.body
         const basket = await Basket.create({userId})

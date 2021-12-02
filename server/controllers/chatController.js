@@ -27,11 +27,11 @@ class ChatController {
 
             console.log('Подключились !');
 
-            socket.on('join', ({ name, room }, callback) => {
+            socket.on('join', ({ email, name, room }, callback) => {
 
                 console.log('Принимаем на сервере имя и комнату из события join созданного на клиенте  !', name, room);
 
-                const { error, user } = addUser({ id: socket.id, name, room });
+                const { error, user } = addUser({ id: socket.id, email, name, room });
 
                 if(error) return callback(error);
 
