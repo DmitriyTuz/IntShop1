@@ -1,5 +1,5 @@
-//const {User} = require("../models/models");
-const {BasketDevice} = require("../models/models");
+const { User, Room, UserRoom } = require("../models/models");
+
 const users = [];
 
 const addUser = async ({ id, email, name, room }) => {
@@ -7,13 +7,26 @@ const addUser = async ({ id, email, name, room }) => {
     room = room.trim().toLowerCase();
     email = email.trim().toLowerCase();
 
-    const user1 = await User.findOne( { where: { email } } );
+/*    const user1 = await User.findOne( { where: { email } } );
+    if ( !user1 ) return { error: 'User with this email not found' };
 
-    const room1 = await Room.create( name: room)
+    const room1 = await User.findOne( { where: { name: room } } );
+    if ( !room1 ) {
+         await Room.create( {name: room} )
+    }
 
-//    const existingUser = users.find((user) => user.room === room && user.name === name);
+    const existingUser1 = UserRoom.findOne( { where: { userId: user1.id, roomId: room.id } } );
 
-    const user_room = await UserRoom.create({userId, roomId})
+    if(!email || !name || !room) return { error: 'Username, email and room are required.' };
+    if(existingUser1) return { error: 'Username is taken.' };
+
+    await UserRoom.create( {userId: user1.id, roomId: room.id} );
+
+//    const room1 = await Room.create( name: room)*/
+
+    const existingUser = users.find((user) => user.room === room && user.name === name);
+
+//    const user_room = await UserRoom.create({userId, roomId})
 
 
     if(!name || !room) return { error: 'Username and room are required.' };
