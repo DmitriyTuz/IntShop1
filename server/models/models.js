@@ -119,5 +119,6 @@ module.exports = {
     DeviceInfo,
 
     Room,
-    Message
+    Message,
+    UserRoom
 }

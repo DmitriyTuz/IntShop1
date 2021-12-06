@@ -25,7 +25,7 @@ const Chat = ({ location }) => {
     const { email, name, room } = queryString.parse(location.search);
 
     console.log(location.search);
-    console.log(name, room);
+    console.log(email, name, room);
 
     socket = io(ENDPOINT);
 

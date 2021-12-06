@@ -7,20 +7,24 @@ const addUser = async ({ id, email, name, room }) => {
     room = room.trim().toLowerCase();
     email = email.trim().toLowerCase();
 
-/*    const user1 = await User.findOne( { where: { email } } );
+        const user1 = await User.findOne( { where: { email } } );
+    console.log("*** user1 = ", user1);
     if ( !user1 ) return { error: 'User with this email not found' };
 
-    const room1 = await User.findOne( { where: { name: room } } );
+
+
+    let room1 = await Room.findOne( { where: { name: room } } );
     if ( !room1 ) {
-         await Room.create( {name: room} )
+         room1 = await Room.create( { name: room } )
     }
 
-    const existingUser1 = UserRoom.findOne( { where: { userId: user1.id, roomId: room.id } } );
+    console.log('*** UserRoom = ', UserRoom);
+    const existingUser1 = await UserRoom.findOne( { where: { userId: user1.id, roomId: room1.id } } );
 
     if(!email || !name || !room) return { error: 'Username, email and room are required.' };
     if(existingUser1) return { error: 'Username is taken.' };
 
-    await UserRoom.create( {userId: user1.id, roomId: room.id} );
+    UserRoom.create( {userId: user1.id, roomId: room1.id} );
 
 //    const room1 = await Room.create( name: room)*/
 
@@ -32,7 +36,7 @@ const addUser = async ({ id, email, name, room }) => {
     if(!name || !room) return { error: 'Username and room are required.' };
     if(existingUser) return { error: 'Username is taken.' };
 
-    const user = { id, name, room };
+    const user = { id, name, email, room };
 
     users.push(user);
 
