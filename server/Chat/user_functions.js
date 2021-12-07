@@ -24,7 +24,7 @@ const addUser = async ({ id, email, name, room }) => {
     if(!email || !name || !room) return { error: 'Username, email and room are required.' };
     if(existingUser1) return { error: 'Username is taken.' };
 
-    UserRoom.create( {userId: user1.id, roomId: room1.id} );
+    await UserRoom.create( {userId: user1.id, roomId: room1.id} );
 
 //    const room1 = await Room.create( name: room)*/
 
