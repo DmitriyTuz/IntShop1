@@ -7,7 +7,7 @@ const addUser = async ({ id, email, name, room }) => {
     room = room.trim().toLowerCase();
     email = email.trim().toLowerCase();
 
-        const user1 = await User.findOne( { where: { email } } );
+        const user1 = User.findOne( { where: { email } } );
     console.log("*** user1 = ", user1);
     if ( !user1 ) return { error: 'User with this email not found' };
 
