@@ -1,44 +1,57 @@
 const { User, Room, UserRoom } = require("../models/models");
+const ApiError = require("../error/ApiError");
 
 const users = [];
 
-const addUser = async ({ id, email, name, room }) => {
-    name = name.trim().toLowerCase();
-    room = room.trim().toLowerCase();
-    email = email.trim().toLowerCase();
+const addUser = async ({ id, email, name, room }, next) => {
 
-    const user1 = User.findOne( { where: { email } } );
-    console.log("*** user1 = ", user1);
-    if ( !user1 ) return { error: 'User with this email not found' };
+    try {
+        name = name.trim().toLowerCase();
+        room = room.trim().toLowerCase();
+        email = email.trim().toLowerCase();
 
-    let room1 = await Room.findOne( { where: { name: room } } );
-    if ( !room1 ) {
-         room1 = await Room.create( { name: room } )
-    }
+        const user1 = await User.findOne( { where: { email } } );
+        console.log("*** user1 = ", user1);
+        if ( !user1 ) return { error: 'User with this email not found' };
 
-    console.log('*** UserRoom = ', UserRoom);
-    let existingUser1 = await UserRoom.findOne( { where: { userId: user1.id, roomId: room1.id } } );
+        let room1 = await Room.findOne( { where: { name: room } } );
+        if ( !room1 ) {
+            room1 = await Room.create( { name: room } )
+        }
 
-    if(!email || !name || !room) return { error: 'Username, email and room are required.' };
-    if(existingUser1) return { error: 'Username is taken.' };
+        console.log('*** UserRoom = ', UserRoom);
+        let existingUser1 = await UserRoom.findOne( { where: { userId: user1.id, roomId: room1.id } } );
 
-    existingUser1 = await UserRoom.create( {userId: user1.id, roomId: room1.id} );
+        if(!email || !name || !room) return { error: 'Username, email and room are required.' };
+        if(existingUser1) return { error: 'Username is taken.' };
+
+        existingUser1 = await UserRoom.create( {userId: user1.id, roomId: room1.id} );
 
 //    const room1 = await Room.create( name: room)*/
 
-    const existingUser = users.find((user) => user.room === room && user.name === name);
+//        const existingUser = await User.findOne()
+
+        const existingUser = users.find((user) => user.room === room && user.name === name);
 
 //    const user_room = await UserRoom.create({userId, roomId})
 
 
-    if(!name || !room) return { error: 'Username and room are required.' };
-    if(existingUser) return { error: 'Username is taken.' };
+        if(!name || !room) return { error: 'Username and room are required.' };
+        if(existingUser) return { error: 'Username is taken.' };
 
-    const user = { id, name, email, room };
+//        const user = { id, user1.name, email, room };
 
-    users.push(user);
+        name = user1.name;
+        const user = { id, name, email, room };
 
-    return { user };
+        users.push(user);
+
+        return { user };
+
+    } catch (e) {
+        next(ApiError.badRequest(e.message))
+    }
+
 }
 
 const removeUser = (id) => {
