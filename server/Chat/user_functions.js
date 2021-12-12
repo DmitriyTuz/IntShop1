@@ -31,13 +31,13 @@ const addUser = async ({ id, email, name, room }, next) => {
 
 //        const existingUser = await User.findOne()
 
-        const existingUser = users.find((user) => user.room === room && user.name === name);
+//        const existingUser = users.find((user) => user.room === room && user.name === name);
 
 //    const user_room = await UserRoom.create({userId, roomId})
 
 
-        if(!name || !room) return { error: 'Username and room are required.' };
-        if(existingUser) return { error: 'Username is taken.' };
+//        if(!name || !room) return { error: 'Username and room are required.' };
+//        if(existingUser) return { error: 'Username is taken.' };
 
 //        const user = { id, user1.name, email, room };
 
