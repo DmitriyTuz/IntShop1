@@ -1,4 +1,4 @@
-const { User, Room, UserRoom } = require("../models/models");
+const { User, Room, UserRoom, BasketDevice, Device} = require("../models/models");
 const ApiError = require("../error/ApiError");
 
 const users = [];
@@ -62,7 +62,25 @@ const removeUser = (id) => {
 
 const getUser = (id) => users.find((user) => user.id === id);
 
-const getUsersInRoom = async (room) => User.findAll()
+const getUsersInRoom = async (room) => {
+
+    let usersRoom = User.findAll(
+
+        {attributes: ["name","email"],
+            include: [{
+                model: UserRoom, attributes:[],
+                required: false,
+                include: [{
+                    model: Room, attributes:["name"],
+                    required: false
+                }]
+            }]
+        },
+/*        {
+            where : { Room.name: room }
+    }*/
+)
+}
 
 // const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
