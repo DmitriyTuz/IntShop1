@@ -64,20 +64,19 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = async (room) => {
 
-    let usersRoom = await User.findAll(
+    let user = await User.findAll(
 
         {attributes: ["name","email"],
             include: [{
-                model: UserRoom, attributes:[],
-                required: false,
-                include: [{
-                    model: Room, attributes:["name"],
-                    required: false,
-                    where: { name: room }
-                }]
+                model: Room, attributes:["name"],
+                required: true,
+                where: { name: room }
             }]
         }
-)
+);
+//    console.log(user);
+
+    return { user };
 }
 
 /*Document.findAll({
