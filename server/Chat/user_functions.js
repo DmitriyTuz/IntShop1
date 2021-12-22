@@ -64,7 +64,7 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = async (room) => {
 
-    let usersRoom = User.findAll(
+    let usersRoom = await User.findAll(
 
         {attributes: ["name","email"],
             include: [{
@@ -72,15 +72,27 @@ const getUsersInRoom = async (room) => {
                 required: false,
                 include: [{
                     model: Room, attributes:["name"],
-                    required: false
+                    required: false,
+                    where: { name: room }
                 }]
             }]
-        },
-/*        {
-            where : { Room.name: room }
-    }*/
+        }
 )
 }
+
+/*Document.findAll({
+    where: {'$employee.manager.id$': id},
+    include: [{
+        model: models.Employee,
+        required: true,
+        as: 'employee',
+        include: [{
+            model: models.Manager,
+            required: true,
+            as: 'manager',
+            where: { id: managerId },
+        }],
+    }]*/
 
 // const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
