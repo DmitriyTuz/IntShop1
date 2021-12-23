@@ -40,7 +40,7 @@ class ChatController {
                 socket.emit('message', { user: 'admin', text: `${user.name}, welcome to ${user.room}.`});
                 socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
-                let users = await getUsersInRoom(user.room);
+                let users = getUsersInRoom(user.room);
                 console.log(users);
 
                 io.to(user.room).emit('roomData', { room: user.room, users: users });

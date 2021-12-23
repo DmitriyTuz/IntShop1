@@ -62,7 +62,7 @@ const removeUser = (id) => {
 
 const getUser = (id) => users.find((user) => user.id === id);
 
-const getUsersInRoom = async (room) => {
+/*const getUsersInRoom = async (room) => {
 
     let user = await User.findAll(
 
@@ -77,7 +77,7 @@ const getUsersInRoom = async (room) => {
 //    console.log(user);
 
     return { user };
-}
+}*/
 
 /*Document.findAll({
     where: {'$employee.manager.id$': id},
@@ -93,6 +93,6 @@ const getUsersInRoom = async (room) => {
         }],
     }]*/
 
-// const getUsersInRoom = (room) => users.filter((user) => user.room === room);
+const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
 module.exports = { addUser, removeUser, getUser, getUsersInRoom };
