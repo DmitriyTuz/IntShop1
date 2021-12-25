@@ -41,10 +41,11 @@ const addUser = async ({ id, email, name, room }, next) => {
 
 //        const user = { id, user1.name, email, room };
 
-        name = user1.name;
+//        let id = user1.id;
+            name = user1.name;
         const user = { id, name, email, room };
 
-        users.push(user);
+       users.push(user);
 
         return { user };
 
@@ -62,11 +63,11 @@ const removeUser = (id) => {
 
 const getUser = (id) => users.find((user) => user.id === id);
 
-/*const getUsersInRoom = async (room) => {
+const getUsersInRoom = async (room) => {
 
     let user = await User.findAll(
 
-        {attributes: ["name","email"],
+        {attributes: ["id","name","email"],
             include: [{
                 model: Room, attributes:["name"],
                 required: true,
@@ -76,8 +77,8 @@ const getUser = (id) => users.find((user) => user.id === id);
 );
 //    console.log(user);
 
-    return { user };
-}*/
+    return user;
+}
 
 /*Document.findAll({
     where: {'$employee.manager.id$': id},
@@ -93,6 +94,6 @@ const getUser = (id) => users.find((user) => user.id === id);
         }],
     }]*/
 
-const getUsersInRoom = (room) => users.filter((user) => user.room === room);
+//const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
 module.exports = { addUser, removeUser, getUser, getUsersInRoom };
