@@ -32,6 +32,7 @@ class ChatController {
                 console.log('Принимаем на сервере имя и комнату из события join созданного на клиенте  !', name, room);
 
                 const { error, user } = await addUser({ id: socket.id, email, name, room });
+                console.log('***user= ', user);
 
                 if(error) return callback(error);
 
@@ -41,7 +42,7 @@ class ChatController {
                 socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
                 let users = await getUsersInRoom(user.room);
-                console.log(users);
+                console.log('***users= ' , users);
 
                 io.to(user.room).emit('roomData', { room: user.room, users: users });
 

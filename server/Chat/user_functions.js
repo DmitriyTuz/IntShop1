@@ -65,7 +65,7 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = async (room) => {
 
-    let user = await User.findAll(
+    let users = await User.findAll(
 
         {attributes: ["id","name","email"],
             include: [{
@@ -75,9 +75,9 @@ const getUsersInRoom = async (room) => {
             }]
         }
 );
-//    console.log(user);
+    console.log(users);
 
-    return user;
+    return users;
 }
 
 /*Document.findAll({
