@@ -3,7 +3,7 @@ const ApiError = require("../error/ApiError");
 
 const users = [];
 
-const addUser = async ({ id, email, name, room }, next) => {
+const addUser = async ({ email, name, room }, next) => {
 
     try {
         name = name.trim().toLowerCase();
@@ -41,7 +41,7 @@ const addUser = async ({ id, email, name, room }, next) => {
 
 //        const user = { id, user1.name, email, room };
 
-//        let id = user1.id;
+        let id = user1.id;
             name = user1.name;
         const user = { id, name, email, room };
 

@@ -31,7 +31,7 @@ class ChatController {
 
                 console.log('Принимаем на сервере имя и комнату из события join созданного на клиенте  !', name, room);
 
-                const { error, user } = await addUser({ id: socket.id, email, name, room });
+                const { error, user } = await addUser({ email, name, room });
                 console.log('***user= ', user);
 
                 if(error) return callback(error);
@@ -50,7 +50,7 @@ class ChatController {
             });
 
             socket.on('sendMessage', (message, callback) => {
-                const user = getUser(socket.id);
+                const user = getUser(user.id);
 
                 io.to(user.room).emit('message', { user: user.name, text: message });
 
