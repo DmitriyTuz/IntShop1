@@ -50,7 +50,9 @@ class ChatController {
             });
 
             socket.on('sendMessage', (message, callback) => {
-                const user = getUser(user.id);
+
+                console.log(soket.id);
+                const user = getUser(soket.id);
 
                 io.to(user.room).emit('message', { user: user.name, text: message });
 
