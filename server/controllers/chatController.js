@@ -44,15 +44,20 @@ class ChatController {
                 let users = await getUsersInRoom(user.room);
                 console.log('***users= ' , users);
 
+                let user1 = user.id;
+                console.log('***user1= ' , user1);
+
                 io.to(user.room).emit('roomData', { room: user.room, users: users });
 
                 callback();
             });
 
-            socket.on('sendMessage', (message, callback) => {
+            socket.on('sendMessage', async (message, callback) => {
 
-                console.log(soket.id);
-                const user = getUser(soket.id);
+//                let user1 = User.findOne( { where: {email} })
+
+//                console.log(user.id);
+                const user = getUser(socket.id);
 
                 io.to(user.room).emit('message', { user: user.name, text: message });
 
