@@ -11,7 +11,7 @@ const addUser = async ({ email, name, room }, next) => {
         email = email.trim().toLowerCase();
 
         const user1 = await User.findOne( { where: { email } } );
-        console.log("*** user1 = ", user1);
+//        console.log("*** user1 = ", user1);
         if ( !user1 ) return { error: 'User with this email not found' };
 
         let room1 = await Room.findOne( { where: { name: room } } );
@@ -19,7 +19,7 @@ const addUser = async ({ email, name, room }, next) => {
             room1 = await Room.create( { name: room } )
         }
 
-        console.log('*** UserRoom = ', UserRoom);
+//        console.log('*** UserRoom = ', UserRoom);
         let existingUser1 = await UserRoom.findOne( { where: { userId: user1.id, roomId: room1.id } } );
 
         if(!email || !name || !room) return { error: 'Username, email and room are required.' };

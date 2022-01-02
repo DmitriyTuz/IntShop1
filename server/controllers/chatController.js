@@ -2,6 +2,8 @@ const { User, Room, Message, Basket, BasketDevice, Device} = require('../models/
 const { addUser, getUsersInRoom, getUser, removeUser } = require('../Chat/user_functions');
 const ApiError = require("../error/ApiError");
 
+let userId;
+
 class ChatController {
 
     async getChat(req, res, next) {
@@ -22,30 +24,37 @@ class ChatController {
         return res.json(chat)
     };
 
+
     connectSocket(io)  {
         io.on('connect', (socket) => {
+
 
             console.log('Подключились !');
 
             socket.on('join', async ({ email, name, room }, callback) => {
 
+
                 console.log('Принимаем на сервере имя и комнату из события join созданного на клиенте  !', name, room);
 
                 const { error, user } = await addUser({ email, name, room });
-                console.log('***user= ', user);
+//                console.log('***user= ', user);
+
 
                 if(error) return callback(error);
 
+                userId = user.id;
+
+
                 socket.join(user.room);
 
-                socket.emit('message', { user: 'admin', text: `${user.name}, welcome to ${user.room}.`});
+                socket.emit('message', { userId: user.id, user: 'admin', text: `${user.name}, welcome to ${user.room}.`});
                 socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
                 let users = await getUsersInRoom(user.room);
-                console.log('***users= ' , users);
+//                console.log('***users= ' , users);
 
                 let user1 = user.id;
-                console.log('***user1= ' , user1);
+//                console.log('***user1= ' , user1);
 
                 io.to(user.room).emit('roomData', { room: user.room, users: users });
 
@@ -56,10 +65,10 @@ class ChatController {
 
 //                let user1 = User.findOne( { where: {email} })
 
-//                console.log(user.id);
-                const user = getUser(socket.id);
+                console.log('отправка сообщения');
+                const user = getUser(message.id);
 
-                io.to(user.room).emit('message', { user: user.name, text: message });
+                io.to(user.room).emit('message', { user: user.name, text: message.message });
 
                 callback();
             });

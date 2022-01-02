@@ -14,6 +14,7 @@ const ENDPOINT = 'http://localhost:5000/';
 let socket;
 
 const Chat = ({ location }) => {
+  const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [room, setRoom] = useState('');
@@ -29,9 +30,11 @@ const Chat = ({ location }) => {
 
     socket = io(ENDPOINT);
 
-    setEmail(email)
+// console.log(name);
+    setEmail(email);
     setRoom(room);
     setName(name);
+// console.log(name);
 
     socket.emit('join', { email, name, room }, (error) => {
       if(error) {
@@ -41,7 +44,10 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, location.search]);
   
   useEffect(() => {
+
     socket.on('message', message => {
+      setId(message.userId);
+      console.log('***massage= ', message);
       setMessages(messages => [ ...messages, message ]);
     });
     
@@ -54,7 +60,7 @@ const Chat = ({ location }) => {
     event.preventDefault();
 
     if(message) {
-      socket.emit('sendMessage', message, () => setMessage(''));
+      socket.emit('sendMessage', {id, message}, () => setMessage(''));
     }
   }
 
