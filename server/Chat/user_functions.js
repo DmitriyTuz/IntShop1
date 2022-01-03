@@ -64,7 +64,7 @@ const removeUser = (id) => {
 const getUser = async (Id) => {
 
     let user1 = await User.findOne( { where: { id: Id } } );
-    let room1 = await Room.findOne( { where: { id: Id } } );
+    let room1 = await UserRoom.findOne( { where: { userId: Id } } );
 
     let id = user1.id;
     let name = user1.name;
