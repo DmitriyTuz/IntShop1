@@ -22,6 +22,8 @@ const Chat = ({ location }) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
+  console.log('111name = ', name);
+
   useEffect(() => {
     const { email, name, room } = queryString.parse(location.search);
 
@@ -30,11 +32,11 @@ const Chat = ({ location }) => {
 
     socket = io(ENDPOINT);
 
-// console.log(name);
+    console.log('222name = ', name);
     setEmail(email);
     setRoom(room);
     setName(name);
-// console.log(name);
+    console.log('333name = ', name);
 
     socket.emit('join', { email, name, room }, (error) => {
       if(error) {
@@ -60,6 +62,7 @@ const Chat = ({ location }) => {
     event.preventDefault();
 
     if(message) {
+      console.log('***id = ', id);
       socket.emit('sendMessage', {id, message}, () => setMessage(''));
     }
   }

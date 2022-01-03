@@ -34,7 +34,7 @@ class ChatController {
             socket.on('join', async ({ email, name, room }, callback) => {
 
 
-                console.log('Принимаем на сервере имя и комнату из события join созданного на клиенте  !', name, room);
+//                console.log('Принимаем на сервере имя и комнату из события join созданного на клиенте  !', name, room);
 
                 const { error, user } = await addUser({ email, name, room });
 //                console.log('***user= ', user);
@@ -42,7 +42,7 @@ class ChatController {
 
                 if(error) return callback(error);
 
-                userId = user.id;
+//                userId = user.id;
 
 
                 socket.join(user.room);
@@ -53,9 +53,6 @@ class ChatController {
                 let users = await getUsersInRoom(user.room);
 //                console.log('***users= ' , users);
 
-                let user1 = user.id;
-//                console.log('***user1= ' , user1);
-
                 io.to(user.room).emit('roomData', { room: user.room, users: users });
 
                 callback();
@@ -63,10 +60,8 @@ class ChatController {
 
             socket.on('sendMessage', async (message, callback) => {
 
-//                let user1 = User.findOne( { where: {email} })
-
                 console.log('отправка сообщения');
-                const user = getUser(message.id);
+                const user = await getUser(message.id);
 
                 io.to(user.room).emit('message', { user: user.name, text: message.message });
 

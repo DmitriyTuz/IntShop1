@@ -61,7 +61,21 @@ const removeUser = (id) => {
     if(index !== -1) return users.splice(index, 1)[0];
 }
 
-const getUser = (id) => users.find((user) => user.id === id);
+const getUser = async (Id) => {
+
+    let user1 = await User.findOne( { where: { id: Id } } );
+    let room1 = await Room.findOne( { where: { id: Id } } );
+
+    let id = user1.id;
+    let name = user1.name;
+    let email = user1.email;
+
+    const user = { id, name, email, room };
+
+    return user;
+}
+
+//const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = async (room) => {
 
