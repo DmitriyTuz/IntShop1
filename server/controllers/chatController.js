@@ -61,7 +61,7 @@ class ChatController {
             socket.on('sendMessage', async (message, callback) => {
 
                 console.log('отправка сообщения');
-                const user = await getUser(message.id);
+                const user = getUser(message.id);
 
                 io.to(user.room).emit('message', { user: user.name, text: message.message });
 
