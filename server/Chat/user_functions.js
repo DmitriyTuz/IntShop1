@@ -66,7 +66,7 @@ const getUser = async (Id) => {
     let user1 = await User.findOne( { where: { id: Id } } );
 
     let room1 = await UserRoom.findOne( { where: { userId: Id } } );
-    console.log('***room1 = ', room1);
+//    console.log('***room1 = ', room1);
 
     let id = user1.id;
     console.log(id);
