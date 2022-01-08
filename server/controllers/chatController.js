@@ -66,6 +66,7 @@ class ChatController {
 
                 io.to(user.room).emit('message', { user: user.name, text: message.message });
 
+
                 callback();
             });
 

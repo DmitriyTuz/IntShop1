@@ -3,9 +3,9 @@ const ApiError = require("../error/ApiError");
 
 const users = [];
 
-const addUser = async ({ email, name, room }, next) => {
+const addUser = async ({ email, name, room }) => {
 
-    try {
+
         name = name.trim().toLowerCase();
         room = room.trim().toLowerCase();
         email = email.trim().toLowerCase();
@@ -49,9 +49,7 @@ const addUser = async ({ email, name, room }, next) => {
 
         return { user };
 
-    } catch (e) {
-        next(ApiError.badRequest(e.message))
-    }
+
 
 }
 
