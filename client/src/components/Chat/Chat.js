@@ -29,6 +29,9 @@ const Chat = ({ location }) => {
     const result = queryString.parse(location.search);
     const email = result.email;
     const Name = result.name;
+    console.log('result = ', result);
+    console.log('result.name = ', name);
+
     const room = result.room;
 //    const { email, Name, room } = queryString.parse(location.search);
 
@@ -41,9 +44,12 @@ const Chat = ({ location }) => {
     setEmail(email);
     setRoom(room);
     setName(Name);
+//    setName(name);
     console.log('333name = ', name);
 
     socket.emit('join', { email, Name, room }, (error) => {
+
+      console.log('name = ', name);
       if(error) {
         alert(error);
       }
