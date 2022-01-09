@@ -42,7 +42,7 @@ class ChatController {
 
                 if(error) return callback(error);
 
-//                userId = user.id;
+                userId = user.id;
 
 
                 socket.join(user.room);
@@ -76,7 +76,8 @@ class ChatController {
 
                 console.log('Отключились !');
 
-                const user = removeUser(socket.id);
+                const user = removeUser(userId);
+//                const user = removeUser(socket.id);
 
                 if(user) {
                     io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
