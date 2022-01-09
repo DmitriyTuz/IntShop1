@@ -66,6 +66,8 @@ class ChatController {
 
                 io.to(user.room).emit('message', { user: user.name, text: message.message });
 
+                const message1 = await Message.create({text: message.message, userId: user.id, roomId: user.room})
+                console.log('***message1 = ', message1);
 
                 callback();
             });
