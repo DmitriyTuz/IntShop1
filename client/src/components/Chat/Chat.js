@@ -60,7 +60,7 @@ const Chat = ({ location }) => {
 
     socket.on('message', message => {
       setId(message.userId);
-      console.log('***massage= ', message);
+      console.log('***1 massage= ', message);
       setMessages(messages => [ ...messages, message ]);
     });
     
@@ -74,6 +74,7 @@ const Chat = ({ location }) => {
 
     if(message) {
       console.log('***id = ', id);
+      console.log('***2 message = ', message);
       socket.emit('sendMessage', {id, message}, () => setMessage(''));
     }
   }
