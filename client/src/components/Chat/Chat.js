@@ -26,17 +26,16 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
 
-    const result = queryString.parse(location.search);
+//    const result = queryString.parse(location.search);
 //    const email = result.email;
-    const Name = result.name;
-    console.log('result = ', result);
-    console.log('result.name = ', Name);
+//    const Name = result.name;
+//    console.log('result.name = ', Name);
 
 //    const room = result.room;
     const { email, name, room } = queryString.parse(location.search);
 
-    console.log(location.search);
-    console.log(email, Name, room);
+//    console.log(location.search);
+//    console.log(email, Name, room);
 
     socket = io(ENDPOINT);
 
@@ -60,6 +59,7 @@ const Chat = ({ location }) => {
 
     socket.on('message', message => {
       setId(message.userId);
+      setRoom(message.roomName);
       console.log('***1 massage= ', message);
       setMessages(messages => [ ...messages, message ]);
     });
@@ -75,7 +75,7 @@ const Chat = ({ location }) => {
     if(message) {
       console.log('***id = ', id);
       console.log('***2 message = ', message);
-      socket.emit('sendMessage', {id, message}, () => setMessage(''));
+      socket.emit('sendMessage', {id, room, message}, () => setMessage(''));
     }
   }
 

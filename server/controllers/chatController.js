@@ -47,7 +47,7 @@ class ChatController {
 
                 socket.join(user.room);
 
-                socket.emit('message', { userId: user.id, user: 'admin', text: `${user.name}, welcome to ${user.room}.`});
+                socket.emit('message', { userId: user.id, roomName: user.room, user: 'admin', text: `${user.name}, welcome to ${user.room}.`});
                 socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
                 let users = await getUsersInRoom(user.room);
@@ -63,15 +63,15 @@ class ChatController {
                 console.log('отправка сообщения');
                 console.log('***message = ', message);
 
-//                const user = getUser(socket.id);
+//                const user = getUser(message.id);
 
-                const user = await getUser(message.id);
-
+                const user = await getUser(message.id, message.room);
+                console.log('***user = ', user);
 
                 io.to(user.room).emit('message', { user: user.name, text: message.message });
 
-//                const message1 = await Message.create({text: message.message, userId: user.id, roomId: user.room})
-//                console.log('***message1 = ', message1);
+                const message1 = await Message.create({text: message.message, userId: message.id, roomId: message.room})
+                console.log('***message1 = ', message1);
 
                 callback();
             });
@@ -81,12 +81,12 @@ class ChatController {
                 console.log('Отключились !');
 
 //                const user = removeUser(userId);
-                const user = removeUser(socket.id);
+/*                const user = removeUser(socket.id);
 
                 if(user) {
                     io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
                     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
-                }
+                }*/
             })
         });
     }
