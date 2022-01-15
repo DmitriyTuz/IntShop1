@@ -29,7 +29,7 @@ class ChatController {
         io.on('connect', (socket) => {
 
 
-//            console.log('Подключились !');
+            console.log('Подключились !');
 
             socket.on('join', async ({ email, name, room }, callback) => {
 
@@ -69,6 +69,8 @@ class ChatController {
                 console.log('***user = ', user);
 
                 io.to(user.room).emit('message', { user: user.name, text: message.message });
+
+                console.log('=====>*** ', message.message, message.id, message.room);
 
                 const message1 = await Message.create({text: message.message, userId: message.id, roomId: message.room})
                 console.log('***message1 = ', message1);
