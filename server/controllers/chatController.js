@@ -51,7 +51,7 @@ class ChatController {
                 socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
 
                 let users = await getUsersInRoom(user.room);
-//                console.log('***users= ' , users);
+                console.log('***users= ' , users);
 
                 io.to(user.room).emit('roomData', { room: user.room, users: users });
 
@@ -83,12 +83,12 @@ class ChatController {
                 console.log('Отключились !');
 
 //                const user = removeUser(userId);
-/*                const user = removeUser(socket.id);
+                const user = removeUser(socket.id);
 
                 if(user) {
                     io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
                     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
-                }*/
+                }
             })
         });
     }

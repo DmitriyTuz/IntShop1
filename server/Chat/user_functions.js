@@ -13,11 +13,11 @@ const addUser = async ({ email, name, room }) => {
         let user1 = await User.findOne( { where: { email } } );
 //        console.log("*** user1 = ", user1);
 
-//        if ( !user1 ) return { error: 'User with this email not found' };
+        if ( !user1 ) return { error: 'User with this email not found' };
 
-        if ( !user1 ) {
+/*        if ( !user1 ) {
             user1 = await User.create( {name: name, email: email} )
-        };
+        };*/
 
         let room1 = await Room.findOne( { where: { name: room } } );
         if ( !room1 ) {
