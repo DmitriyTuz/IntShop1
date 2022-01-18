@@ -72,7 +72,7 @@ class ChatController {
 
                 console.log('=====>*** ', message.message, message.id, message.room);
 
-                const message1 = await Message.create({text: message.message, userId: message.id, roomId: message.room})
+                const message1 = await Message.create({text: message.message, userId: message.id /*roomId: message.room*/});
                 console.log('***message1 = ', message1);
 
                 callback();
