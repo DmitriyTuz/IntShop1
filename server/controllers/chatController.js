@@ -63,12 +63,12 @@ class ChatController {
                 console.log('отправка сообщения');
                 console.log('***message = ', message);
 
-//                const user = getUser(message.id);
+//                const user = getUser(socket.id);
 
                 const user = await getUser(message.id, message.room);
                 console.log('***user = ', user);
 
-                io.to(user.room).emit('message', { user: user.name, text: message.message });
+                io.to(user.room).emit('message', { userId: message.id, roomName: user.room, user: user.name, text: message.message });
 
                 console.log('=====>*** ', message.message, message.id, message.room);
 
@@ -82,13 +82,13 @@ class ChatController {
 
                 console.log('Отключились !');
 
-                const user = removeUser(userId);
-//                const user = removeUser(socket.id);
+//                const user = removeUser(userId);
+/*                const user = removeUser(socket.id);
 
                 if(user) {
                     io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
                     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
-                }
+                } */
             })
         });
     }

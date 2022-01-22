@@ -58,6 +58,7 @@ const Chat = ({ location }) => {
   useEffect(() => {
 
     socket.on('message', message => {
+      console.log('***id = ', message.userId);
       setId(message.userId);
       setRoom(message.roomName);
       console.log('***1 massage= ', message);
@@ -74,6 +75,7 @@ const Chat = ({ location }) => {
 
     if(message) {
       console.log('***id = ', id);
+      console.log('***room = ', room);
       console.log('***2 message = ', message);
       socket.emit('sendMessage', {id, room, message}, () => setMessage(''));
     }
