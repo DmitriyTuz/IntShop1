@@ -72,8 +72,8 @@ class ChatController {
 
                 console.log('=====>*** ', message.message, message.id, message.room);
 
-                const message1 = await Message.create({text: message.message, userId: message.id /*roomId: message.room*/});
-                console.log('***message1 = ', message1);
+//                const message1 = await Message.create({text: message.message, userId: message.id /*roomId: message.room*/});
+//                console.log('***message1 = ', message1);
 
                 callback();
             });
@@ -82,8 +82,8 @@ class ChatController {
 
                 console.log('Отключились !');
 
-//                const user = removeUser(userId);
-                const user = removeUser(socket.id);
+                const user = removeUser(userId);
+//                const user = removeUser(socket.id);
 
                 if(user) {
                     io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
