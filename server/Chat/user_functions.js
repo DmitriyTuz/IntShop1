@@ -60,19 +60,19 @@ const addUser = async ({ email, name, room }) => {
 
 }
 
-/*const removeUser = async (id) => {
+const removeUser = async (id) => {
     await UserRoom.destroy({
         where: {
             userId: id
         }
     });
-}*/
+}
 
-const removeUser = (id) => {
+/*const removeUser = (id) => {
     const index = users.findIndex((user) => user.id === id);
 
     if(index !== -1) return users.splice(index, 1)[0];
-}
+}*/
 
 const getUser = async (Id, room) => {
 
