@@ -28,7 +28,6 @@ class ChatController {
     connectSocket(io)  {
         io.on('connect', (socket) => {
 
-
             console.log('Подключились !');
 
             socket.on('join', async ({ email, name, room }, callback) => {
@@ -37,7 +36,7 @@ class ChatController {
 //                console.log('Принимаем на сервере имя и комнату из события join созданного на клиенте  !', name, room);
 
                 const { error, user } = await addUser({ email, name, room });
-//                console.log('***user= ', user);
+                console.log('***user= ', user);
 
 
                 if(error) return callback(error);

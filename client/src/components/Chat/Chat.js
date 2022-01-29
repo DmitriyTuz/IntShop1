@@ -26,16 +26,7 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
 
-//    const result = queryString.parse(location.search);
-//    const email = result.email;
-//    const Name = result.name;
-//    console.log('result.name = ', Name);
-
-//    const room = result.room;
     const { email, name, room } = queryString.parse(location.search);
-
-//    console.log(location.search);
-//    console.log(email, Name, room);
 
     socket = io(ENDPOINT);
 

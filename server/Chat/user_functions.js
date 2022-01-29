@@ -28,15 +28,10 @@ const addUser = async ({ email, name, room }) => {
         let existingUser1 = await UserRoom.findOne( { where: { userId: user1.id, roomId: room1.id } } );
 
         if(!email || !name || !room) return { error: 'Username, email and room are required.' };
-//        if(existingUser1) return { error: 'Username is taken.' };
 
         if(existingUser1) return { error: 'Username is taken.' };
 
         existingUser1 = await UserRoom.create( {userId: user1.id, roomId: room1.id} );
-
-//    const room1 = await Room.create( name: room)*/
-
-//        const existingUser = await User.findOne()
 
 //        const existingUser = users.find((user) => user.room === room && user.name === name);
 
@@ -55,8 +50,6 @@ const addUser = async ({ email, name, room }) => {
        users.push(user);
 
         return { user };
-
-
 
 }
 
