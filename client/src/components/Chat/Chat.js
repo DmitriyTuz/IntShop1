@@ -34,7 +34,7 @@ const Chat = ({ location }) => {
     setEmail(email);
     setRoom(room);
     setName(name);
-//    setName(name);
+
     console.log('333name = ', name);
 
     socket.emit('join', { email, name, room }, (error) => {
