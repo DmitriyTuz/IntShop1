@@ -106,7 +106,9 @@ Message.belongsTo(User)
 
 //db.food.hasMany(db.meal, {as : 'Food', foreignKey : 'idFood'});
 
-Room.hasMany(Message, { onDelete: "cascade" })
+//Room.hasMany(Message, { onDelete: "cascade" })
+
+Room.hasMany(Message, { onDelete: "cascade" }, {foreignKey : 'nameRoom'});
 Message.belongsTo(Room)
 
 User.belongsToMany(Room, { through: UserRoom })

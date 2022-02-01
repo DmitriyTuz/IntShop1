@@ -72,21 +72,15 @@ const removeUser = async (id) => {
     if(index !== -1) return users.splice(index, 1)[0];
 }*/
 
-const getUser = async (Id, room, socketId) => {
+const getUser = async (room, socketId) => {
 
     let user1 = await User.findOne( { where: { socketId: socketId } } );
 
-//    let room1 = await UserRoom.findOne( { where: { userId: Id } } );
-//    console.log('***room1 = ', room1);
-
     let id = user1.id;
-    console.log(id);
+//    console.log(id);
 
     let name = user1.name;
     let email = user1.email;
-
-//    let room1 = room1.roomId;
-//    console.log('***room = ', room1);
 
     const user = { id, socketId, name, email, room };
 

@@ -1,6 +1,7 @@
 const { User, Room, Message, Basket, BasketDevice, Device} = require('../models/models')
 const { addUser, getUsersInRoom, getUser, removeUser } = require('../Chat/user_functions');
 const ApiError = require("../error/ApiError");
+const {where} = require("sequelize");
 
 let userId;
 
@@ -19,7 +20,7 @@ class ChatController {
                     model: Message, attributes:["id","text"],
                     required: false
                 }]
-            }]
+            }, { where : { email }}]
         })
         return res.json(chat)
     };
@@ -64,7 +65,9 @@ class ChatController {
 
 //                const user = getUser(socket.id);
 
-                const user = await getUser(message.id, message.room, socket.id);
+                const user = await getUser(message.room, socket.id);
+
+//                const user = await getUser(message.id, message.room, socket.id);
 
 //                const user = await getUser(socket.id);
 
@@ -74,8 +77,10 @@ class ChatController {
 
                 console.log('=====>*** ', message.message, message.id, message.room);
 
-//                const message1 = await Message.create({text: message.message, userId: message.id /*roomId: message.room*/});
-//                console.log('***message1 = ', message1);
+                const room1 = await Room.findOne ( { where : { name : user.room } } );
+
+                const message1 = await Message.create({text: message.message, userId: message.id, roomId: room1.id});
+                console.log('***message1 = ', message1);
 
                 callback();
             });
