@@ -8,19 +8,19 @@ let userId;
 class ChatController {
 
     async getChat(req, res, next) {
-        const { email } = req.body
-        if (!email) {
-            return next(ApiError.badRequest('Некорректный email'))
+        const { message } = req.query;
+        if (!message) {
+            return next(ApiError.badRequest('Введите сообщение : '))
         }
-        let chat = await User.findAll({attributes: [],
-            include: [{
-                model: Room, attributes:[],
-                required: false,
+        let chat = await User.findAll({attributes: ["id", "socketId", "name"],
+
                 include: [{
+
                     model: Message, attributes:["id","text"],
-                    required: false
+                    required: true,
+                    where : { text : message }
+
                 }]
-            }, { where : { email }}]
         })
         return res.json(chat)
     };
