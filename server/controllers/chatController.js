@@ -3,6 +3,9 @@ const { addUser, getUsersInRoom, getUser, removeUser } = require('../Chat/user_f
 const ApiError = require("../error/ApiError");
 const {where} = require("sequelize");
 
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 let userId;
 
 class ChatController {
@@ -12,13 +15,18 @@ class ChatController {
         if (!message) {
             return next(ApiError.badRequest('Введите сообщение : '))
         }
+
+//        const user = await User.findAll({ where: { email: { [Op.like]: `%${req.query.email}%` } } })
+
         let chat = await User.findAll({attributes: ["id", "socketId", "name"],
 
                 include: [{
 
                     model: Message, attributes:["id","text"],
                     required: true,
-                    where : { text : message }
+                    where : { text : { [Op.like]: `%${req.query.message}%` } }
+
+//                    where : { text : message }
 
                 }]
         })
