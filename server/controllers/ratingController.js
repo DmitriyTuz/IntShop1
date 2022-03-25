@@ -1,5 +1,5 @@
 const sequelize = require('../db')
-const {Rating} = require('../models/models')
+const {Rating} = require('../models/index')
 const ApiError = require('../error/ApiError');
 
 class RatingController {

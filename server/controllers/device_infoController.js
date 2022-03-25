@@ -1,4 +1,4 @@
-const {DeviceInfo} = require('../models/models')
+const {DeviceInfo} = require('../models/index')
 
 class DeviceInfoController {
 

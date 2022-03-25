@@ -7,7 +7,7 @@ const validator = require('validator');
 const ApiError = require('../error/ApiError')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const {User,Basket, Rating} = require('../models/models')
+const {User,Basket, Rating} = require('../models/index')
 
 //const {createToken, verifyToken} = require("../utils/jwtToken");
 //const {hashPassword, comparePassword} = require("../utils/workPassword");

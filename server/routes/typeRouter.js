@@ -5,9 +5,9 @@ const checkRole = require('../middleware/checkRoleMiddleware')
 
 
 router.get('/', typeController.getAll)
-router.get('/find/:id', typeController.getOne)
+router.get('/:id', typeController.getOne)
 
-router.post('/create', checkRole('ADMIN'), typeController.create)
+router.post('/create', /*checkRole('ADMIN'),*/ typeController.create)
 
 
 router.put("/edit", checkRole('ADMIN'), typeController.edit)

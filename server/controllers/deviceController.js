@@ -1,6 +1,6 @@
 const uuid = require('uuid')
 const path = require('path')
-const {Device, DeviceInfo} = require('../models/models')
+const {Device, DeviceInfo} = require('../models/index')
 const ApiError = require('../error/ApiError')
 
 class DeviceController {
@@ -42,14 +42,14 @@ class DeviceController {
             devices = await Device.findAndCountAll({limit, offset})
         }
         if (brandId && !typeId) {
-            devices = await Device.findAndCountAll({where: {brandId}, limit, offset})
+            devices = await Device.findAndCountAll({where: {BrandId:brandId}, limit, offset})
 
         }
         if (!brandId && typeId) {
-            devices = await Device.findAndCountAll({where: {typeId}, limit, offset})
+            devices = await Device.findAndCountAll({where: {TypeId:typeId}, limit, offset})
         }
         if (brandId && typeId) {
-            devices = await Device.findAndCountAll({where: {typeId, brandId}, limit, offset})
+            devices = await Device.findAndCountAll({where: {TypeId:typeId, BrandId:brandId}, limit, offset})
         }
         return res.json(devices)
     }
@@ -59,9 +59,10 @@ class DeviceController {
         const device = await Device.findOne(
             {
                 where: {id},
-                include: [{model: DeviceInfo, as: 'info'}]
+                include: [{model: DeviceInfo,/* as:'info'*/}]
             },
         )
+        device.dataValues.info = device.DeviceInfos
         return res.json(device)
     }
 

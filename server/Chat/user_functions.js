@@ -1,4 +1,4 @@
-const { User, Room, UserRoom, BasketDevice, Device, Basket} = require("../models/models");
+const { User, Room, UserRoom, BasketDevice, Device, Basket} = require("../models/index");
 const ApiError = require("../error/ApiError");
 
 const users = [];
@@ -12,7 +12,7 @@ const addUser = async ({ socketId, email, name, room }) => {
         email = email.trim().toLowerCase();
 
 
-        let user1 = await User.update({ socketId }, { where: { email } } )
+        await User.update({ socketId }, { where: { email } } )
 
         let user2 = await User.findOne( { where: { email } } );
 
