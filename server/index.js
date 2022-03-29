@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require('express')
 const sequelize = require('./db')
+
+const mongoose = require("mongoose");
 //const models = require('./models/index')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
@@ -35,13 +37,24 @@ const start = async () => {
     try {
         await sequelize.authenticate()
         await sequelize.sync()
-        server.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+
+        mongoose.connect("mongodb://localhost:27017/usersdb", { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false }, function(err) {
+            if (err) return console.log(err);
+
+            server.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+        });
+
+
     } catch (e) {
         console.log(e)
     }
 }
 
 
+
 start()
+
+
+
 
 
