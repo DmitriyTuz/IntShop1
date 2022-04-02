@@ -2,11 +2,23 @@
 
 const { User } = require('../models/index')
 
+const userM = require('../models-mongo/userM')
+
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await User.create({ name: 'Dima', email: 'dim@mail.ru', password: '111'}),
-    await User.create({ name: 'Alexey', email: 'al@mail.ru', password: '222'})
 
+/*    await User.create({ name: 'Dima', email: 'dim@mail.ru', password: '111'});
+    await User.create({ name: 'Alexey', email: 'al@mail.ru', password: '222'});*/
+
+    let user = await userM.find();
+
+    console.log('***user = ', user);
+    console.log('***user = ', user[1].name);
+
+    for ( let i = 1; i <= user.length; i++ ) {
+      await User.create({ name: user[i].name, email: user[i].email } );
+
+    }
   },
 
   async down (queryInterface, Sequelize) {
