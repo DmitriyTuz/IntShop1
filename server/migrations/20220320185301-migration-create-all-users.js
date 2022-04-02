@@ -13,9 +13,10 @@ module.exports = {
     let user = await userM.find();
 
     console.log('***user = ', user);
-    console.log('***user = ', user[1].name);
+    console.log('***user = ', user[0].name);
+    console.log('***userLength = ', user.length);
 
-    for ( let i = 1; i <= user.length; i++ ) {
+    for ( let i = 0; i <= user.length - 1; i++ ) {
       await User.create({ name: user[i].name, email: user[i].email } );
 
     }
