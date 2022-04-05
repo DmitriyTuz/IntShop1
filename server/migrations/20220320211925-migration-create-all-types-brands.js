@@ -1,9 +1,31 @@
 'use strict';
 
-const { Type, Brand, Device } = require('../models/index')
+const { User } = require('../models/index')
+
+const userM = require('../models-mongo/userM')
+const Baskets = require('../models-mongo/Baskets')
 
 module.exports = {
   async up (queryInterface, Sequelize) {
+
+    let users = await User.findAll();
+
+    console.log('***user = ', users);
+    console.log('***user = ', users[0].name);
+    console.log('***userLength = ', users.length);
+
+    for ( let i = 0; i <= users.length - 1; i++ ) {
+      await userM.create({name: users[i].name, email: users[i].email}, function (err, results) {
+
+
+        console.log(results);
+      });
+
+    };
+
+    await Baskets.create({name: 'basket1'});
+    await Baskets.update({})
+a
     /*
     await Type.create({ name: 'Холодильники'}),
     await Type.create({ name: 'Телефоны'}),

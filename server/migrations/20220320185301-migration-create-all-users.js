@@ -4,23 +4,41 @@ const { User } = require('../models/index')
 
 const userM = require('../models-mongo/userM')
 
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
 module.exports = {
   async up (queryInterface, Sequelize) {
 
-/*    await User.create({ name: 'Dima', email: 'dim@mail.ru', password: '111'});
-    await User.create({ name: 'Alexey', email: 'al@mail.ru', password: '222'});*/
+      let users = await userM.find();
 
-    let user = await userM.find();
+    // console.log('***user = ', users);
+    // console.log('***user = ', users[0].name);
+    // console.log('***userLength = ', users.length);
 
-    console.log('***user = ', user);
-    console.log('***user = ', user[0].name);
-    console.log('***userLength = ', user.length);
+      for (let i = 0; i <= users.length - 1; i++) {
+          await userM.deleteOne({name: users[i].name}, function (err, results) {
 
-    for ( let i = 0; i <= user.length - 1; i++ ) {
-      await User.create({ name: user[i].name, email: user[i].email } );
+              console.log(results);
 
-    }
-  },
+          });
+      }
+
+      /*    await User.create({ name: 'Dima', email: 'dim@mail.ru', password: '111'});
+      await User.create({ name: 'Alexey', email: 'al@mail.ru', password: '222'});*/
+
+      /*    let user = await userM.find();
+
+          console.log('***user = ', user);
+          console.log('***user = ', user[0].name);
+          console.log('***userLength = ', user.length);
+
+          for ( let i = 0; i <= user.length - 1; i++ ) {
+            await User.create({ name: user[i].name, email: user[i].email } );
+
+          }*/
+     },
+
 
   async down (queryInterface, Sequelize) {
     /**
