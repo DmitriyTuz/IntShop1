@@ -24,8 +24,8 @@ module.exports = {
     };
 
     await Baskets.create({name: 'basket1'});
-    await Baskets.update({})
-a
+    // await Baskets.update({})
+
     /*
     await Type.create({ name: 'Холодильники'}),
     await Type.create({ name: 'Телефоны'}),
