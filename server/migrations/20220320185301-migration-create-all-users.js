@@ -20,6 +20,9 @@ module.exports = {
 
       for (let i = 0; i <= users.length - 1; i++) {
           await userM.deleteOne({name: users[i].name});
+      }
+
+      for (let i = 0; i <= baskets.length - 1; i++) {
           await Baskets.deleteOne({name: baskets[i].name});
       }
 
